@@ -11,7 +11,7 @@ confirmed <- dat %>%
                                confirmed = str_remove(confirmed,"c\\("),
                                confirmed = str_remove(confirmed," "),
                                confirmed = as.numeric(confirmed)) %>% 
-  select(-deaths,-recovered)
+  select(-deaths)
 
 deaths <- dat %>%
   transform(deaths = strsplit(as.character(deaths), ",")) %>%
@@ -20,16 +20,16 @@ deaths <- dat %>%
                             deaths = str_remove(deaths," "),
                             deaths = as.numeric(deaths),
                             Date = as.Date(days)) %>% 
-  select(-confirmed,-recovered)
+  select(-confirmed)
 
-recovered <- dat %>%
-  transform(recovered = strsplit(as.character(recovered), ",")) %>%
-  unnest(recovered) %>% mutate(recovered = str_remove(recovered,"\\)"),
-                            recovered = str_remove(recovered,"c\\("),
-                            recovered = str_remove(recovered," "),
-                            recovered = as.numeric(recovered),
-                            Date = as.Date(days)) %>% 
-  select(-deaths,-confirmed)
+#recovered <- dat %>%
+#  transform(recovered = strsplit(as.character(recovered), ",")) %>%
+#  unnest(recovered) %>% mutate(recovered = str_remove(recovered,"\\)"),
+#                            recovered = str_remove(recovered,"c\\("),
+#                            recovered = str_remove(recovered," "),
+#                            recovered = as.numeric(recovered),
+#                            Date = as.Date(days)) %>% 
+#  select(-deaths,-confirmed)
 
 #Give it the pivot
 
@@ -77,8 +77,8 @@ return(state_dat)
 
 confirmed <- state_sum(confirmed)
 deaths <- state_sum(deaths)
-recovered <- state_sum(recovered)
+#recovered <- state_sum(recovered)
 
 write.csv(confirmed, "confirmed.csv",row.names = FALSE)
 write.csv(deaths, "deaths.csv",row.names = FALSE)
-write.csv(recovered, "recovered.csv",row.names = FALSE)
+#write.csv(recovered, "recovered.csv",row.names = FALSE)

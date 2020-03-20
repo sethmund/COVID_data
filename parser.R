@@ -45,21 +45,21 @@ deaths <- deaths %>%
               values_from = deaths,
               values_fn = list(deaths = sum))
 
-recovered <- recovered %>%
-  mutate(Date = days) %>% 
-  pivot_wider(names_from = Date, 
-              values_from = recovered,
-              values_fn = list(recovered = sum))
+#recovered <- recovered %>%
+#  mutate(Date = days) %>% 
+#  pivot_wider(names_from = Date, 
+#              values_from = recovered,
+#              values_fn = list(recovered = sum))
 
 #States Summaries
 
 state_sum <- function(state_dat) {
 
 dat1 <- state_dat %>% 
-  filter(county == "" | stateAbbr == "DC") %>% 
+  filter(county == "Statewide Unallocated" | stateAbbr == "DC") %>% 
   select(stateFIPS,countyFIPS,county,stateAbbr)
 dat2 <- confirmed %>% 
-  filter(county != "")
+  filter(county != "Statewide Unallocated")
 
 dat3 <- state_dat %>% 
   filter(!is.na(county)) %>% 
